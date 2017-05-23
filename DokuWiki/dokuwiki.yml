@@ -1,0 +1,9 @@
+---
+- name: Instalar DokuWiki
+  hosts: DokuWiki
+  user: root
+
+  roles:
+   - { role: nginx, configuration_file: 'roles/dokuwiki/templates/default.conf', dest: default }
+   - php5-fpm
+   - dokuwiki

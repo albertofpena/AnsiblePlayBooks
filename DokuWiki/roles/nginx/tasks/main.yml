@@ -1,0 +1,20 @@
+---
+- name: Instalar Nginx
+  apt: pkg=nginx state=present update_cache=yes
+
+- name: Iniciar Nginx durante el arranque
+  service: name=nginx state=started enabled=yes
+
+- name: Copiando configuración en sites-enabled
+  template: src={{ configuration_file }} dest=/etc/nginx/sites-enabled/{{ dest }}
+  notify: Reiniciar Nginx
+
+- name: Impedir acceso a fichero install.php
+  tags: despuesDeInstalar
+  lineinfile:
+    dest: /etc/nginx/sites-enabled/default
+    state: "present"
+    line: '    location ~ /(data/|conf/|bin/|inc/|install.php) { deny all; }'
+    regexp: '    #location ~ /\(data/\|conf/\|bin/\|inc/\|install\.php\) { deny all; }'
+  notify: Reiniciar Nginx
+    

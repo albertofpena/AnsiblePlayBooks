@@ -1,0 +1,14 @@
+---
+ - name: Descargar el último paquete estable de DokuWiki
+   get_url: url=http://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz dest=/var/tmp/dokuwiki-stable.tgz validate_certs=no
+
+ - name: Descomprimir el tarball
+   command: tar -xvf dokuwiki-stable.tgz chdir=/var/tmp
+   
+ - name: Mover DokuWiki a /var/www
+   shell: mv /var/tmp/dokuwiki-2017-02-19b /var/www/dokuwiki
+
+ - name: Modificar los permisos para el usuario www-data:www-data
+   shell: chown -R www-data:www-data /var/www/dokuwiki/
+
+   notify: Reiniciar Nginx
