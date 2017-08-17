@@ -1,0 +1,7 @@
+---
+- hosts: Neuro
+  become: yes
+
+  tasks:
+    - name: Reiniciar servidores
+      command: /sbin/reboot
