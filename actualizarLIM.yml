@@ -1,0 +1,8 @@
+---
+- hosts: ServidoresLIM
+  become: true
+  tasks:
+    - name: Actualizando lista de paquetes
+      apt: update_cache=yes
+    - name: Actualizando paquetes
+      apt: upgrade=dist
